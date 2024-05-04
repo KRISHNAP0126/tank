@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water-Tap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div id="waterLevel" class="leftbox">
+      <div id="water"></div>
+    </div>
+    <div class="rightbox">
+
+      <div class="right_top">
+        <div id="tapButton" onclick="main()" class="tap_button"></div>
+      </div>
+
+      <div class="right_bottom">
+        <div class="pipe"></div>
+        <div class="tap"></div>
+
+
+
+
+        <div id="waterFlow" class="waterflow"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    var intervalId;
+    var isFlowing = false;
+    var newHeight;
+
+    function main() {
+
+      var tap = document.getElementById('tapButton');
+
+      if (isFlowing) {
+        console.log("yes stop flowing")
+
+        stopFlow();
+        tap.style.backgroundColor = "red";
+
+      } else if (!isFlowing) {
+        console.log("no start flowing")
+        startFlow();
+        tap.style.backgroundColor = "green";
+      }
+    }
+
+    var flow = document.getElementById("waterFlow")
+    function startFlow() {
+
+
+      isFlowing = true;
+      intervalId = setInterval(water, 10);
+      if (newHeight === 0) {
+        console.log(flow.style.visibility = "hidden");
+      }
+      else {
+        console.log(flow.style.visibility = "visible");
+      }
+    }
+      function stopFlow() {
+        isFlowing = false;
+        flow.style.visibility = "hidden";
+        clearInterval(intervalId);
+      }
+
+      function water() {
+
+        var water = document.getElementById("water")
+        var currentHeight = water.clientHeight;
+
+        newHeight = Math.max(currentHeight - 1, 0); // Decrease by 1 pixel
+        water.style.height = newHeight + 'px';
+        water.style.marginTop = (400 - newHeight) + "px";
+
+
+        if (newHeight === 0) {
+          flow.style.visibility = "hidden";
+          stopFlow();
+        }
+
+      }
+
+  </script>
+</body>
+
+</html>
